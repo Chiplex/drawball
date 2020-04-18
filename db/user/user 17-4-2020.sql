@@ -1,0 +1,4 @@
+ALTER TABLE `users`
+	ALTER `id` DROP DEFAULT;
+ALTER TABLE `users`
+	CHANGE COLUMN `id` `id` VARCHAR(36) NOT NULL COLLATE 'utf8mb4_spanish2_ci' FIRST;

@@ -1,0 +1,559 @@
+<nav class="navbar navbar-expand-lg navbar-light  bg-light">
+  <a class="navbar-brand">
+    <img src="assets/ico.png" width="30" height="30" alt="">
+  </a>
+  <button class="navbar-toggler" data-target="#menu" data-toggle="collapse" aria-controls="menu" aria-expanded="false"
+    aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div id="menu" class="collapse navbar-collapse">
+    <ul class="navbar-nav">
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuArchivo" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          File
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuArchivo">
+          <button data-toggle="tooltip" data-placement="bottom" title="Clean Canvas" type="button"
+            class="btn btn-link dropdown-item" (click)="confirmClear()">
+            <fa-icon [icon]="['fas', 'sun']"></fa-icon> New
+          </button>
+          <button data-toggle="tooltip" data-placement="bottom" title="Load from localStorage" type="button"
+            class="btn btn-link dropdown-item" (click)="loadCanvasFromJSON()">
+            <fa-icon [icon]="['fas', 'folder-open']"></fa-icon> Open Local
+          </button>
+          <button data-toggle="tooltip" data-placement="bottom" title="Save in localStorage" type="button"
+            class="btn btn-link dropdown-item" (click)="saveCanvasToJSON()">
+            <fa-icon [icon]="['fas', 'save']"></fa-icon> Save local
+          </button>
+          <div class="dropdown-divider"></div>
+          <a data-toggle="tooltip" data-placement="bottom" title="Export to image" type="button"
+            class="btn btn-link dropdown-item" (click)="rasterize()" [href]="resultImage" target="_blank">
+            <fa-icon [icon]="['fas', 'file-export']"></fa-icon> Export to image
+          </a>
+          <a data-toggle="tooltip" data-placement="bottom" title="Export to SVG" type="button"
+            class="btn btn-link dropdown-item" (click)="rasterizeSVG()" [href]="resultImage" target="_blank">
+            <fa-icon [icon]="['fas', 'file-export']"></fa-icon> Export to SVG
+          </a>
+        </div>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuEdicion" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          Edit
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuEdicion">
+          <button title="Delete element" type="button" class="btn btn-outline-secundary dropdown-item" (click)="undo()">
+            <fa-icon [icon]="['fas', 'undo']"></fa-icon> Deshacer
+          </button>
+          <button title="Delete element" type="button" class="btn btn-outline-secundary dropdown-item" (click)="redo()">
+            <fa-icon [icon]="['fas', 'redo']"></fa-icon> Rehacer
+          </button>
+          <div class="dropdown-divider"></div>
+          <button title="Send to back" type="button" class="btn btn-outline-secundary dropdown-item"
+            [disabled]="!selected" (click)="sendBackwards()">
+            <fa-icon [icon]="['fas', 'angle-double-down']"></fa-icon> Send backwards
+          </button>
+          <button title="Send to back" type="button" class="btn btn-outline-secundary dropdown-item"
+            [disabled]="!selected" (click)="sendToBack()">
+            <fa-icon [icon]="['fas', 'angle-down']"></fa-icon> Send to back
+          </button>
+          <button title="Send to front" type="button" class="btn btn-outline-secundary dropdown-item"
+            [disabled]="!selected" (click)="bringToFront()">
+            <fa-icon [icon]="['fas', 'angle-up']"></fa-icon> Bring to front
+          </button>
+          <button title="Send to front" type="button" class="btn btn-outline-secundary dropdown-item"
+            [disabled]="!selected" (click)="bringForward()">
+            <fa-icon [icon]="['fas', 'angle-double-up']"></fa-icon> Bring forward
+          </button>
+          <button title="Clone" type="button" class="btn btn-outline-secundary dropdown-item"
+            [disabled]="!selected" (click)="clone()">
+            <fa-icon [icon]="['fas', 'clone']"></fa-icon> Clone
+          </button>
+          <div class="dropdown-divider"></div>
+          <button title="Clone" type="button" class="btn btn-outline-secundary dropdown-item" (click)="selectAll()">
+            <fa-icon [icon]="['fas', 'clone']"></fa-icon> Select All
+          </button>
+          <button title="group" type="button" class="btn btn-outline-default dropdown-item" (click)="group()">
+            <fa-icon [icon]="['fas', 'box']"></fa-icon> Group
+          </button>
+          <button title="group" type="button" class="btn btn-outline-default dropdown-item" (click)="ungroup()">
+            <fa-icon [icon]="['fas', 'boxes']"></fa-icon> Ungroup
+          </button>
+          <!-- <button title="group" type="button" class="btn btn-outline-default dropdown-item" (click)="lock()">
+            <fa-icon [icon]="['fas', 'lock']"></fa-icon> Lock
+          </button>
+          <button title="group" type="button" class="btn btn-outline-default dropdown-item" (click)="unlock()">
+            <fa-icon [icon]="['fas', 'unlock']"></fa-icon> Unlock
+          </button> -->
+        </div>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuRedimensionar" role="button"
+          data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Canvas
+        </a>
+        <div class="dropdown-menu py-0 w-75" aria-labelledby="navbarDropdownMenuRedimensionar">
+          <div class="px-3 pt-3 d-flex align-content-center flex-wrap">
+            <div class="form-group">
+              <div class="input-group input-group-sm">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">
+                    <fa-icon [icon]="['fas', 'arrows-alt-h']"></fa-icon>
+                  </span>
+                </div>
+                <input type="number" class="form-control" [(ngModel)]="size.width" (keyup)="changeSize($event)" />
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="input-group input-group-sm">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">
+                    <fa-icon [icon]="['fas', 'arrows-alt-v']"></fa-icon>
+                  </span>
+                </div>
+                <input type="number" class="form-control" [(ngModel)]="size.height" (keyup)="changeSize($event)" />
+              </div>
+            </div>
+            <div class="form-group" *ngIf="!drawingMode">
+              <div class="input-group input-group-sm" *ngIf="!properties.canvas.image">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">BG Color</div>
+                </div>
+                <input type="text" class="form-control" [cpPosition]="'bottom'" [(colorPicker)]="properties.canvas.fill"
+                  [style.background]="properties.canvas.fill" [value]="properties.canvas.fill"
+                  (colorPickerChange)="setCanvasFill()" readonly />
+                <!-- <div class="input-group-prepend">
+                  <div class="input-group-text">BG Image</div>
+                </div>
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="http://example.jpg"
+                  [(ngModel)]="props.canvasImage"
+                  (keyup)="setCanvasImage()"
+                /> -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+
+    </ul>
+    <div class="form-row align-items-center">
+
+      <!-- Delete Object -->
+      <div class="col-auto">
+        <button title="Delete element" type="button" class="btn btn-outline-danger btn-sm" [disabled]="drawingMode"
+          (click)="deleteObject()">
+          <fa-icon [icon]="['fas', 'trash']"></fa-icon>
+        </button>
+      </div>
+      <!-- END Delete Object -->
+
+      <!-- Mode Drawing -->
+      <div class="col-auto">
+        <div class="custom-control custom-switch">
+          <input type="checkbox" class="custom-control-input" id="customSwitch1" [(ngModel)]="drawingMode">
+          <label class="custom-control-label" for="customSwitch1">Mode Draw</label>
+        </div>
+      </div>
+      <!-- END Mode Drawing -->
+
+      <!-- Set Mode Paint -->
+      <div class="col-auto" *ngIf="drawingMode">
+        <div class="input-group input-group-sm">
+          <div class="input-group-append">
+            <span class="input-group-text">
+              <fa-icon [icon]="['fas', 'tint']"></fa-icon>
+            </span>
+          </div>
+          <select [(ngModel)]="properties.brush.mode" class="form-control" (change)="setBrushMode()">
+            <option selected>Pencil</option>
+            <option>Circle</option>
+            <option>Spray</option>
+            <option>Pattern</option>
+          </select>
+        </div>
+      </div>
+      <!-- END Set Mode Paint -->
+
+      <!-- Set Color Paint -->
+      <div class="col-auto" *ngIf="drawingMode">
+        <div class="input-group input-group-sm">
+          <div class="input-group-append">
+            <span class="input-group-text">
+              <fa-icon [icon]="['fas', 'tint']"></fa-icon>
+            </span>
+          </div>
+          <input type="text" class="form-control" [cpPosition]="'bottom'" [(colorPicker)]="properties.brush.color"
+            [style.background]="properties.brush.color" [value]="properties.brush.color"
+            (colorPickerChange)="setBrushColor()" readonly />
+        </div>
+      </div>
+      <!-- END Set Color Paint -->
+
+      <!-- Set Pencil Width -->
+      <div class="col-auto" *ngIf="drawingMode">
+        <div class="input-group input-group-sm">
+          <div class="input-group-append">
+            <span class="input-group-text">
+              <fa-icon [icon]="['fas', 'paint-brush']"></fa-icon>
+            </span>
+          </div>
+          <input id="inputOpacity" type="range" class="custom-range form-control" [(ngModel)]="properties.brush.width"
+            (change)="setBrushWidth()" min="10" />
+        </div>
+      </div>
+      <!-- END Set Pencil Width -->
+
+      <!-- Set Shadow Width -->
+      <div class="col-auto" *ngIf="drawingMode || selected">
+        <div class="btn-group btn-group-sm dropdown">
+          <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            Shadow
+          </button>
+          <div class="dropdown-menu">
+            <div class="px-3 py-3">
+              <div class="form-group">
+                <label for="shadowColor">Shadow Color</label>
+                <input type="text" id="shadowColor" class="form-control" [cpPosition]="'bottom'"
+                    [(colorPicker)]="properties.brush.shadowColor" [style.background]="properties.brush.shadowColor"
+                    [value]="properties.brush.shadowColor" (colorPickerChange)="setBrushShadowColor()" readonly />
+              </div>
+              <div class="form-group">
+                <label for="shadowColor">Shadow width</label>
+                  <input id="inputOpacity" type="range" class="custom-range form-control" [(ngModel)]="properties.brush.shadowWidth"
+                      (change)="setBrushShadowWidth()" />
+              </div>
+              <div class="form-group">
+                <label for="shadowColor">Shadow Offset X</label>
+                <input id="inputOpacity" type="range" class="custom-range form-control" [(ngModel)]="properties.brush.shadowOffsetX"
+                      (change)="setBrushShadowOffsetX()" />
+              </div>
+              <div class="form-group">
+                <label for="shadowColor">Shadow Offset Y</label>
+                <input id="inputOpacity" type="range" class="custom-range form-control" [(ngModel)]="properties.brush.shadowOffsetY"
+                      (change)="setBrushShadowOffsetY()" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- END Set Shadow Width -->
+
+      <!-- Set Opacity -->
+      <div class="col-auto" *ngIf="selected && selected.type != 'group'">
+        <div class="input-group input-group-sm">
+          <div class="input-group-prepend">
+            <span class="input-group-text">
+              <fa-icon [icon]="['fas', 'adjust']"></fa-icon>
+            </span>
+          </div>
+          <input id="inputOpacity" type="range" class="custom-range form-control" [(ngModel)]="properties.opacity"
+            (change)="setOpacity()" />
+        </div>
+      </div>
+      <!-- END SetOpacity -->
+
+      <!-- Set Fill -->
+      <div class="col-auto" *ngIf="(selected && textEditor) || (selected && figureEditor) || (selected && pathEditor)">
+        <div class="input-group input-group-sm">
+          <div class="input-group-append">
+            <span class="input-group-text">
+              <fa-icon [icon]="['fas', 'fill']"></fa-icon>
+            </span>
+          </div>
+          <input type="text" class="form-control" [cpPosition]="'bottom'" [(colorPicker)]="properties.fill"
+            [style.background]="properties.fill" [value]="properties.fill" (colorPickerChange)="setFill()" readonly />
+        </div>
+      </div>
+      <!-- END Set Fill -->
+
+      <!-- Set FontFamily -->
+      <div class="col-auto" *ngIf="selected && textEditor">
+        <div class="input-group input-group-sm">
+          <div class="input-group-prepend">
+            <span class="input-group-text">
+              <fa-icon [icon]="['fas', 'font']"></fa-icon>
+            </span>
+          </div>
+          <select [(ngModel)]="properties.text.fontFamily" class="form-control" (change)="setFontFamily()">
+            <option value="arial">Arial</option>
+            <option value="helvetica" selected>Helvetica</option>
+            <option value="verdana">Verdana</option>
+            <option value="courier">Courier</option>
+            <option value="Roboto">Roboto</option>
+            <option value="Open Sans">Open Sans</option>
+            <option value="Zilla Slab">Zilla Slab</option>
+            <option value="Lato">Lato</option>
+            <option value="Bellefair">Bellefair</option>
+            <option value="Fresca">Fresca</option>
+            <option value="Raleway">Raleway</option>
+            <option value="Open Sans Condensed">Open Sans Condensed</option>
+            <option value="Indie Flower">Indie Flower</option>
+            <option value="Josefin Sans">Josefin Sans</option>
+            <option value="Inconsolata">Inconsolata</option>
+            <option value="Pacifico">Pacifico</option>
+            <option value="Gloria Hallelujah">Gloria Hallelujah</option>
+          </select>
+        </div>
+      </div>
+      <!-- END Set FontFamily -->
+
+      <!-- Set Format -->
+      <div class="col-auto" *ngIf="selected && textEditor">
+        <div class="btn-group btn-group-sm dropdown">
+          <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            Formato
+          </button>
+          <div class="dropdown-menu dropdown-menu-right">
+            <div class="btn-group btn-group-sm" role="group">
+              <button type="button" class="btn btn-primary" [ngClass]="{ active: properties.text.align == 'left' }"
+                (click)="setTextAlign('left')">
+                <fa-icon [icon]="['fas', 'align-left']"></fa-icon>
+              </button>
+              <button type="button" class="btn btn-primary" [ngClass]="{ active: properties.text.align == 'center' }"
+                (click)="setTextAlign('center')">
+                <fa-icon [icon]="['fas', 'align-center']"></fa-icon>
+              </button>
+              <button type="button" class="btn btn-primary" [ngClass]="{ active: properties.text.align == 'right' }"
+                (click)="setTextAlign('right')">
+                <fa-icon [icon]="['fas', 'align-right']"></fa-icon>
+              </button>
+              <button type="button" class="btn btn-primary" [ngClass]="{ active: properties.text.align == 'justify' }"
+                (click)="setTextAlign('justify')">
+                <fa-icon [icon]="['fas', 'align-justify']"></fa-icon>
+              </button>
+              <button type="button" class="btn btn-primary" [ngClass]="{ active: properties.text.fontWeight }"
+                (click)="setBold()">
+                <fa-icon [icon]="['fas', 'bold']"></fa-icon>
+              </button>
+              <button type="button" class="btn btn-primary" [ngClass]="{ active: properties.text.fontStyle }"
+                (click)="setFontStyle()">
+                <fa-icon [icon]="['fas', 'italic']"></fa-icon>
+              </button>
+              <button type="button" class="btn btn-primary" [ngClass]="{ active: hasTextDecoration('underline') }"
+                (click)="setTextDecoration('underline')">
+                <fa-icon [icon]="['fas', 'underline']"></fa-icon>
+              </button>
+              <button type="button" class="btn btn-primary" [ngClass]="{ active: hasTextDecoration('overline') }"
+                (click)="setTextDecoration('overline')">
+                Ö
+              </button>
+              <button type="button" class="btn btn-primary" [ngClass]="{
+              active: hasTextDecoration('line-through')
+            }" (click)="setTextDecoration('line-through')">
+                <fa-icon [icon]="['fas', 'strikethrough']"></fa-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- End Set Format-->
+
+      <!-- Set Effect Text -->
+      <div class="col-auto" *ngIf="selected && textEditor">
+        <div class="btn-group btn-group-sm dropdown">
+          <button id="dropdownmenutexteditor" class="btn btn-primary btn-sm btn-block dropdown-toggle"
+            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Text
+          </button>
+          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownmenutexteditor">
+            <div class="px-2">
+              <div class="form-group">
+                <div class="input-group input-group-sm">
+                  <div class="input-group-append">
+                    <span class="input-group-text">
+                      <fa-icon [icon]="['fas', 'text-height']"></fa-icon>
+                    </span>
+                  </div>
+                  <input type="range" class="custom-range form-control" [(ngModel)]="properties.text.fontSize"
+                    (change)="setFontSize()" step="1" min="1" max="120" />
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="input-group input-group-sm">
+                  <div class="input-group-append">
+                    <span class="input-group-text">
+                      <fa-icon [icon]="['fas', 'bold']"></fa-icon>
+                    </span>
+                  </div>
+                  <input type="range" class="custom-range form-control" [(ngModel)]="properties.text.lineHeight"
+                    (change)="setLineHeight()" step="0.1" min="0" max="10" />
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="input-group input-group-sm">
+                  <div class="input-group-append">
+                    <span class="input-group-text">
+                      <fa-icon [icon]="['fas', 'text-width']"></fa-icon>
+                    </span>
+                  </div>
+                  <input type="range" class="custom-range form-control" [(ngModel)]="properties.text.charSpacing"
+                    (change)="setCharSpacing()" step="10" min="-200" max="800" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- END Set Effect Text -->
+    </div>
+
+  </div>
+</nav>
+
+<div class="container-fluid mt-2">
+  <div class="row">
+
+    <!-- Panel de creacion -->
+    <div class="col-sm-12 col-md-12 col-lg-2 col-xl-2">
+      <div class="accordion" id="accordionItems">
+        <div class="card mb-2">
+          <div class="card-header">
+            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseText"
+              aria-expanded="true" aria-controls="collapseOne">
+              Add Text
+            </button>
+          </div>
+          <div id="collapseText" aria-labelledby="headingOne" data-parent="#accordionItems" class="collapse">
+            <div class="card-body">
+              <div class="input-group">
+                <input type="text" class="form-control" [(ngModel)]="textString" placeholder="Add Text"
+                  (keyup.enter)="addText()" />
+                <div class="input-group-append">
+                  <button id="add-text" data-toggle="tooltip" data-placement="bottom" title="Add text"
+                    class="btn btn-primary" (click)="addText()">
+                    <fa-icon [icon]="['fas', 'plus']"></fa-icon>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-header">
+            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseCountry"
+              aria-expanded="true" aria-controls="collapseOne">
+              Add Country
+            </button>
+          </div>
+          <div id="collapseCountry" aria-labelledby="headingOne" data-parent="#accordionItems" class="collapse">
+            <div class="card-body max-height">
+              <img class="images-item" (click)="getImgPolaroid($event)" src="assets/paises/Argentina.png" />
+              <img class="images-item" (click)="getImgPolaroid($event)" src="assets/paises/Bolivia.png" />
+              <img class="images-item" (click)="getImgPolaroid($event)" src="assets/paises/Brasil.png" />
+              <img class="images-item" (click)="getImgPolaroid($event)" src="assets/paises/Chile.png" />
+              <img class="images-item" (click)="getImgPolaroid($event)" src="assets/paises/Colombia.png" />
+              <img class="images-item" (click)="getImgPolaroid($event)" src="assets/paises/Ecuador.png" />
+              <img class="images-item" (click)="getImgPolaroid($event)" src="assets/paises/Paraguay.png" />
+              <img class="images-item" (click)="getImgPolaroid($event)" src="assets/paises/Peru.png" />
+              <img class="images-item" (click)="getImgPolaroid($event)" src="assets/paises/Uruguay.png" />
+              <img class="images-item" (click)="getImgPolaroid($event)" src="assets/paises/Venezuela.png" />
+            </div>
+          </div>
+          <div class="card-header">
+            <button class="btn btn-link " type="button" data-toggle="collapse" data-target="#collapseEyes"
+              aria-expanded="true" aria-controls="collapseOne">
+              Add Eyes
+            </button>
+          </div>
+          <div id="collapseEyes" aria-labelledby="headingOne" data-parent="#accordionItems" class="collapse">
+            <div class="card-body max-height">
+              <img class="images-item" (click)="getImgPolaroid($event)" src="assets/ojos/Alegre.png" />
+              <img class="images-item" (click)="getImgPolaroid($event)" src="assets/ojos/Asustado.png" />
+              <img class="images-item" (click)="getImgPolaroid($event)" src="assets/ojos/Compasible.png" />
+              <img class="images-item" (click)="getImgPolaroid($event)" src="assets/ojos/Durmiendo.png" />
+              <img class="images-item" (click)="getImgPolaroid($event)" src="assets/ojos/Enojado.png" />
+              <img class="images-item" (click)="getImgPolaroid($event)" src="assets/ojos/Guinho.png" />
+              <img class="images-item" (click)="getImgPolaroid($event)" src="assets/ojos/Normal.png" />
+              <img class="images-item" (click)="getImgPolaroid($event)" src="assets/ojos/Riendo.png" />
+              <img class="images-item" (click)="getImgPolaroid($event)" src="assets/ojos/Sorprendido.png" />
+              <img class="images-item" (click)="getImgPolaroid($event)" src="assets/ojos/Tranquilo.png" />
+            </div>
+          </div>
+          <div class="card-header">
+            <button class="btn btn-link " type="button" data-toggle="collapse" data-target="#collapseUpload"
+              aria-expanded="true" aria-controls="collapseOne">
+              Upload Image
+            </button>
+          </div>
+          <div id="collapseUpload" aria-labelledby="headingOne" data-parent="#accordionItems" class="collapse">
+            <div class="card-body">
+              <img id="testImage" *ngIf="url" class="images-item-upload" [src]="url" (click)="addImageOnCanvas(url)" />
+              <div class="input-group">
+                <div class="custom-file">
+                  <input type="file" class="custom-file-input" (change)="readUrl($event)" />
+                  <label class="custom-file-label btn-outline-secondary"></label>
+                </div>
+                <div class="input-group-append">
+                  <button type="button" class="btn btn-outline-danger btn-sm btn-block" (click)="removeWhite(url)">
+                    <i class="fa fa-times" aria-hidden="true"></i> Remove
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-header">
+            <button class="btn btn-link " type="button" data-toggle="collapse" data-target="#collapseFigure"
+              aria-expanded="true" aria-controls="collapseOne">
+              Add Figure
+            </button>
+          </div>
+          <div id="collapseFigure" aria-labelledby="headingOne" data-parent="#accordionItems" class="collapse">
+            <div class="card-body">
+              <div class="btn-group btn-group-sm btn-block mb-2">
+                <button type="button" class="btn btn-primary" (click)="addFigure('square')">
+                  <fa-icon [icon]="['fas', 'square']"></fa-icon>
+                </button>
+                <button type="button" class="btn btn-primary" (click)="addFigure('triangle')">
+                  <fa-icon [icon]="['fas', 'caret-up']"></fa-icon>
+                </button>
+                <button type="button" class="btn btn-primary" (click)="addFigure('circle')">
+                  <fa-icon [icon]="['fas', 'circle']"></fa-icon>
+                </button>
+                <button type="button" class="btn btn-primary" (click)="addFigure('rectangle')">
+                  <fa-icon [icon]="['fas', 'slash']"></fa-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <span class="navbar-text">
+        Hecho por
+        <a href="https://www.facebook.com/SummitCode">
+          SummitCode
+        </a>
+      </span>
+    </div>
+    <!-- Final Panel de creacion -->
+
+    <!-- Canvas -->
+    <div class="col-sm-12 col-md-12 col-lg-10 col-xl-10">
+      <canvas id="canvas"></canvas>
+    </div>
+    <!-- Final Canvas -->
+
+    <!-- Render JSON -->
+    <!-- <div class="col-12">
+      <br />
+      <div class="card">
+        <div class="card-header">
+          <button
+            type="button"
+            class="btn btn-primary btn-sm"
+            (click)="rasterizeJSON()"
+          >
+            <i class="fa fa-refresh" aria-hidden="true"></i> Render to json
+          </button>
+        </div>
+        <div class="card-body">
+          <pre>{{ json }}</pre>
+        </div>
+      </div>
+    </div> -->
+    <!-- / Cierre Render JSON -->
+  </div>
+</div>

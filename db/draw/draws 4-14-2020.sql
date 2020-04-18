@@ -1,0 +1,4 @@
+ALTER TABLE `draws`
+	ALTER `id` DROP DEFAULT;
+ALTER TABLE `draws`
+	CHANGE COLUMN `id` `id` VARCHAR(36) NOT NULL COLLATE 'utf8mb4_spanish2_ci' FIRST;
