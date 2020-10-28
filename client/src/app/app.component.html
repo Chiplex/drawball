@@ -1,3 +1,4 @@
+<!-- <app-navbar [(dataCanvas)]="canvas" [(dataHistory)]="canvasHistory" [(dataIsRedoing)]="isRedoing"></app-navbar> -->
 <nav class="navbar navbar-expand-lg navbar-light  bg-light">
   <a class="navbar-brand">
     <img src="assets/ico.png" width="30" height="30" alt="">
@@ -66,8 +67,8 @@
             [disabled]="!selected" (click)="bringForward()">
             <fa-icon [icon]="['fas', 'angle-double-up']"></fa-icon> Bring forward
           </button>
-          <button title="Clone" type="button" class="btn btn-outline-secundary dropdown-item"
-            [disabled]="!selected" (click)="clone()">
+          <button title="Clone" type="button" class="btn btn-outline-secundary dropdown-item" [disabled]="!selected"
+            (click)="clone()">
             <fa-icon [icon]="['fas', 'clone']"></fa-icon> Clone
           </button>
           <div class="dropdown-divider"></div>
@@ -219,23 +220,23 @@
               <div class="form-group">
                 <label for="shadowColor">Shadow Color</label>
                 <input type="text" id="shadowColor" class="form-control" [cpPosition]="'bottom'"
-                    [(colorPicker)]="properties.brush.shadowColor" [style.background]="properties.brush.shadowColor"
-                    [value]="properties.brush.shadowColor" (colorPickerChange)="setBrushShadowColor()" readonly />
+                  [(colorPicker)]="properties.brush.shadowColor" [style.background]="properties.brush.shadowColor"
+                  [value]="properties.brush.shadowColor" (colorPickerChange)="setBrushShadowColor()" readonly />
               </div>
               <div class="form-group">
                 <label for="shadowColor">Shadow width</label>
-                  <input id="inputOpacity" type="range" class="custom-range form-control" [(ngModel)]="properties.brush.shadowWidth"
-                      (change)="setBrushShadowWidth()" />
+                <input id="inputOpacity" type="range" class="custom-range form-control"
+                  [(ngModel)]="properties.brush.shadowWidth" (change)="setBrushShadowWidth()" />
               </div>
               <div class="form-group">
                 <label for="shadowColor">Shadow Offset X</label>
-                <input id="inputOpacity" type="range" class="custom-range form-control" [(ngModel)]="properties.brush.shadowOffsetX"
-                      (change)="setBrushShadowOffsetX()" />
+                <input id="inputOpacity" type="range" class="custom-range form-control"
+                  [(ngModel)]="properties.brush.shadowOffsetX" (change)="setBrushShadowOffsetX()" />
               </div>
               <div class="form-group">
                 <label for="shadowColor">Shadow Offset Y</label>
-                <input id="inputOpacity" type="range" class="custom-range form-control" [(ngModel)]="properties.brush.shadowOffsetY"
-                      (change)="setBrushShadowOffsetY()" />
+                <input id="inputOpacity" type="range" class="custom-range form-control"
+                  [(ngModel)]="properties.brush.shadowOffsetY" (change)="setBrushShadowOffsetY()" />
               </div>
             </div>
           </div>
@@ -413,6 +414,7 @@
     <div class="col-sm-12 col-md-12 col-lg-2 col-xl-2">
       <div class="accordion" id="accordionItems">
         <div class="card mb-2">
+          <!-- Textos -->
           <div class="card-header">
             <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseText"
               aria-expanded="true" aria-controls="collapseOne">
@@ -433,6 +435,7 @@
               </div>
             </div>
           </div>
+          <!-- Countrys -->
           <div class="card-header">
             <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseCountry"
               aria-expanded="true" aria-controls="collapseOne">
@@ -441,18 +444,11 @@
           </div>
           <div id="collapseCountry" aria-labelledby="headingOne" data-parent="#accordionItems" class="collapse">
             <div class="card-body max-height">
-              <img class="images-item" (click)="getImgPolaroid($event)" src="assets/paises/Argentina.png" />
-              <img class="images-item" (click)="getImgPolaroid($event)" src="assets/paises/Bolivia.png" />
-              <img class="images-item" (click)="getImgPolaroid($event)" src="assets/paises/Brasil.png" />
-              <img class="images-item" (click)="getImgPolaroid($event)" src="assets/paises/Chile.png" />
-              <img class="images-item" (click)="getImgPolaroid($event)" src="assets/paises/Colombia.png" />
-              <img class="images-item" (click)="getImgPolaroid($event)" src="assets/paises/Ecuador.png" />
-              <img class="images-item" (click)="getImgPolaroid($event)" src="assets/paises/Paraguay.png" />
-              <img class="images-item" (click)="getImgPolaroid($event)" src="assets/paises/Peru.png" />
-              <img class="images-item" (click)="getImgPolaroid($event)" src="assets/paises/Uruguay.png" />
-              <img class="images-item" (click)="getImgPolaroid($event)" src="assets/paises/Venezuela.png" />
+                <!-- <img class="images-item" [src]="'https://www.countryflags.io/'+country.alpha2Code+'/flat/64.png'"  (click)="getImgPolaroid($event)" *ngFor="let country of countries" /> -->
+                <img class="images-item" [src]="'https://restcountries.eu/data/'+country.alpha3Code+'.svg' | lowercase"  (click)="getImgPolaroid($event)" *ngFor="let country of countries" />
             </div>
           </div>
+          <!-- Ojos -->
           <div class="card-header">
             <button class="btn btn-link " type="button" data-toggle="collapse" data-target="#collapseEyes"
               aria-expanded="true" aria-controls="collapseOne">
@@ -473,6 +469,7 @@
               <img class="images-item" (click)="getImgPolaroid($event)" src="assets/ojos/Tranquilo.png" />
             </div>
           </div>
+          <!-- Image Upload -->
           <div class="card-header">
             <button class="btn btn-link " type="button" data-toggle="collapse" data-target="#collapseUpload"
               aria-expanded="true" aria-controls="collapseOne">
@@ -495,6 +492,7 @@
               </div>
             </div>
           </div>
+          <!-- Figuras -->
           <div class="card-header">
             <button class="btn btn-link " type="button" data-toggle="collapse" data-target="#collapseFigure"
               aria-expanded="true" aria-controls="collapseOne">

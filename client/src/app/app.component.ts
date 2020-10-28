@@ -1,6 +1,9 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from "@angular/core";
 import { fabric } from "fabric";
 import { Props } from './interfaces/props';
+import { map } from 'rxjs/operators';
+import { CountriesService } from './services/countries.service';
 
 
 @Component({
@@ -10,8 +13,8 @@ import { Props } from './interfaces/props';
 })
 export class AppComponent implements OnInit {
   public canvas: any;
-  private isRedoing: boolean;
-  private canvasHistory: any[];
+  public isRedoing: boolean;
+  public canvasHistory: any[];
 
   public figureEditor: boolean = false;
   public textEditor: boolean = false;
@@ -56,6 +59,7 @@ export class AppComponent implements OnInit {
   };
   public url: any = '';
 
+
   get drawingMode(): boolean {
     return this.canvas.isDrawingMode;
   }
@@ -68,7 +72,7 @@ export class AppComponent implements OnInit {
     this.getBrushShadowOffsetY();
   }
   
-  constructor() {
+   constructor(private http: HttpClient, private countriesService: CountriesService) {
     this.isRedoing = false;
     this.canvasHistory = [];
     this.resultImage = null;
@@ -80,6 +84,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.countriesService.getCountries().subscribe(res => this.countries = res);
     this.canvas = new fabric.Canvas("canvas", {
       selection: true,
       stateful: true
@@ -100,17 +105,16 @@ export class AppComponent implements OnInit {
     this.canvas.freeDrawingBrush.shadowBlur = 0;
     this.canvas.freeDrawingBrush.shadow.color = "#000350"
 
-    this.canvas.on("object:added", e => {
-      const object = e.target;
-      if (!this.isRedoing) {
-        this.canvasHistory = [];
-      }
-      this.isRedoing = false;
-    });
-
     this.canvas.on({
       'object:moving': (e) => { },
       'object:modified': (e) => { },
+      'object:added': (e) => {
+        const object = e.target;
+        if (!this.isRedoing) {
+          this.canvasHistory = [];
+        }
+        this.isRedoing = false;
+      },
       'object:selected': (e) => {
 
         let selectedObject = e.target;
@@ -448,7 +452,7 @@ export class AppComponent implements OnInit {
     let el = event.target;
     fabric.Image.fromURL(el.src, (image) => {
       console.log(image);
-      
+    
       image.set({
         left: 10,
         top: 10,
@@ -456,7 +460,17 @@ export class AppComponent implements OnInit {
         padding: 10,
         cornersize: 10,
         hasRotatingPoint: true,
-        peloas: 12
+        peloas: 12,
+        clipTo: function (ctx) {
+          // ctx.beginPath();
+          // ctx.moveTo(0, 0);
+          // ctx.quadraticCurveTo(0, 250, 250, 250);
+          // ctx.moveTo(250, 250);
+          // ctx.quadraticCurveTo(500, 250, 250, 250);
+          //ctx.moveTo(250, 250);
+          
+          ctx.arc(0, 0, image.height/2, 0, Math.PI * 2, true);
+        }
       });
       image.scaleToWidth(150);
       image.scaleToHeight(150);
@@ -706,4 +720,6 @@ export class AppComponent implements OnInit {
     this.canvas.setActiveObject(obj);
   }
   // END Active Tools
+
+  // Various
 }

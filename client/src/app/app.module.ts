@@ -16,10 +16,13 @@ import { fas } from '@fortawesome/free-solid-svg-icons';
 import { far } from '@fortawesome/free-regular-svg-icons';
 import { fab } from "@fortawesome/free-brands-svg-icons";
 import { BrushComponent } from './tools/brush/brush.component';
+import { NavbarComponent } from './shared/navbar/navbar.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
     AppComponent,
+    //NavbarComponent,
     //BrushComponent
   ],
   imports: [
@@ -32,12 +35,13 @@ import { BrushComponent } from './tools/brush/brush.component';
     MatSlideToggleModule,
     MatMenuModule,
     ColorPickerModule,
-    FontAwesomeModule
+    FontAwesomeModule,
   ],
   exports: [
     MatButtonModule,
     MatCheckboxModule,
     MatSlideToggleModule,
+    HttpClientModule,
     MatMenuModule
   ],
   providers: [],
