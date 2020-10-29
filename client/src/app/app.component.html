@@ -443,9 +443,12 @@
             </button>
           </div>
           <div id="collapseCountry" aria-labelledby="headingOne" data-parent="#accordionItems" class="collapse">
-            <div class="card-body max-height">
+            <div class="card-body">
+				<input type="text" [(ngModel)]="filterCountries" class="form-control" placeholder="Search..."/>
                 <!-- <img class="images-item" [src]="'https://www.countryflags.io/'+country.alpha2Code+'/flat/64.png'"  (click)="getImgPolaroid($event)" *ngFor="let country of countries" /> -->
-                <img class="images-item" [src]="'https://restcountries.eu/data/'+country.alpha3Code+'.svg' | lowercase"  (click)="getImgPolaroid($event)" *ngFor="let country of countries" />
+				<div class="max-height">
+					<img class="images-item" [src]="'https://restcountries.eu/data/'+country.alpha3Code+'.svg' | lowercase"  (click)="getImgPolaroid($event)" *ngFor="let country of countries | pipefilter:filterCountries" />
+				</div>
             </div>
           </div>
           <!-- Ojos -->

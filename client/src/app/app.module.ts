@@ -18,10 +18,12 @@ import { fab } from "@fortawesome/free-brands-svg-icons";
 import { BrushComponent } from './tools/brush/brush.component';
 import { NavbarComponent } from './shared/navbar/navbar.component';
 import { HttpClientModule } from '@angular/common/http';
+import { PipefilterPipe } from './pipefilter.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
+    PipefilterPipe,
     //NavbarComponent,
     //BrushComponent
   ],

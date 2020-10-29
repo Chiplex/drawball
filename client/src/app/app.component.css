@@ -2,7 +2,7 @@
     border: 2px dashed #cccccc;
   }
   .images-item {
-    width: 30%;
+    width: 50%;
     cursor: pointer;
     -webkit-transition: .5s ease;
     -webkit-transition: .5s ease;
@@ -42,7 +42,7 @@
   .max-height{
     overflow-x: scroll;
     white-space: nowrap;
-    padding: 0.5rem;
+    
   }
 
   .options{

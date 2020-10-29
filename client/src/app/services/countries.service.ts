@@ -19,8 +19,8 @@ export class CountriesService {
       );
   }
   
-  handleError(operation = 'operation', result?: T) {
-    return (error: any): Observable<T> => {
+  handleError(operation = 'operation', result?: any) {
+    return (error: any): Observable<any> => {
 
       // TODO: send the error to remote logging infrastructure
       console.error(error); // log to console instead
