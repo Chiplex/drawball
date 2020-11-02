@@ -2,12 +2,11 @@
     border: 2px dashed #cccccc;
   }
   .images-item {
-    width: 50%;
     cursor: pointer;
     -webkit-transition: .5s ease;
     -webkit-transition: .5s ease;
-    padding: 3px;
-    max-width: 100px;
+    padding: 1px;
+    max-width: 50px;
   }
   
   .images-item:hover {
@@ -42,6 +41,9 @@
   .max-height{
     overflow-x: scroll;
     white-space: nowrap;
+    
+    -ms-overflow-style: none; 
+    scrollbar-width: none;
     
   }
 

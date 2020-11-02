@@ -271,272 +271,252 @@
         </div>
       </div>
       <!-- END Set Fill -->
-
-      <!-- Set FontFamily -->
-      <div class="col-auto" *ngIf="selected && textEditor">
-        <div class="input-group input-group-sm">
-          <div class="input-group-prepend">
-            <span class="input-group-text">
-              <fa-icon [icon]="['fas', 'font']"></fa-icon>
-            </span>
-          </div>
-          <select [(ngModel)]="properties.text.fontFamily" class="form-control" (change)="setFontFamily()">
-            <option value="arial">Arial</option>
-            <option value="helvetica" selected>Helvetica</option>
-            <option value="verdana">Verdana</option>
-            <option value="courier">Courier</option>
-            <option value="Roboto">Roboto</option>
-            <option value="Open Sans">Open Sans</option>
-            <option value="Zilla Slab">Zilla Slab</option>
-            <option value="Lato">Lato</option>
-            <option value="Bellefair">Bellefair</option>
-            <option value="Fresca">Fresca</option>
-            <option value="Raleway">Raleway</option>
-            <option value="Open Sans Condensed">Open Sans Condensed</option>
-            <option value="Indie Flower">Indie Flower</option>
-            <option value="Josefin Sans">Josefin Sans</option>
-            <option value="Inconsolata">Inconsolata</option>
-            <option value="Pacifico">Pacifico</option>
-            <option value="Gloria Hallelujah">Gloria Hallelujah</option>
-          </select>
-        </div>
-      </div>
-      <!-- END Set FontFamily -->
-
-      <!-- Set Format -->
-      <div class="col-auto" *ngIf="selected && textEditor">
-        <div class="btn-group btn-group-sm dropdown">
-          <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false">
-            Formato
-          </button>
-          <div class="dropdown-menu dropdown-menu-right">
-            <div class="btn-group btn-group-sm" role="group">
-              <button type="button" class="btn btn-primary" [ngClass]="{ active: properties.text.align == 'left' }"
-                (click)="setTextAlign('left')">
-                <fa-icon [icon]="['fas', 'align-left']"></fa-icon>
-              </button>
-              <button type="button" class="btn btn-primary" [ngClass]="{ active: properties.text.align == 'center' }"
-                (click)="setTextAlign('center')">
-                <fa-icon [icon]="['fas', 'align-center']"></fa-icon>
-              </button>
-              <button type="button" class="btn btn-primary" [ngClass]="{ active: properties.text.align == 'right' }"
-                (click)="setTextAlign('right')">
-                <fa-icon [icon]="['fas', 'align-right']"></fa-icon>
-              </button>
-              <button type="button" class="btn btn-primary" [ngClass]="{ active: properties.text.align == 'justify' }"
-                (click)="setTextAlign('justify')">
-                <fa-icon [icon]="['fas', 'align-justify']"></fa-icon>
-              </button>
-              <button type="button" class="btn btn-primary" [ngClass]="{ active: properties.text.fontWeight }"
-                (click)="setBold()">
-                <fa-icon [icon]="['fas', 'bold']"></fa-icon>
-              </button>
-              <button type="button" class="btn btn-primary" [ngClass]="{ active: properties.text.fontStyle }"
-                (click)="setFontStyle()">
-                <fa-icon [icon]="['fas', 'italic']"></fa-icon>
-              </button>
-              <button type="button" class="btn btn-primary" [ngClass]="{ active: hasTextDecoration('underline') }"
-                (click)="setTextDecoration('underline')">
-                <fa-icon [icon]="['fas', 'underline']"></fa-icon>
-              </button>
-              <button type="button" class="btn btn-primary" [ngClass]="{ active: hasTextDecoration('overline') }"
-                (click)="setTextDecoration('overline')">
-                Ö
-              </button>
-              <button type="button" class="btn btn-primary" [ngClass]="{
-              active: hasTextDecoration('line-through')
-            }" (click)="setTextDecoration('line-through')">
-                <fa-icon [icon]="['fas', 'strikethrough']"></fa-icon>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- End Set Format-->
-
-      <!-- Set Effect Text -->
-      <div class="col-auto" *ngIf="selected && textEditor">
-        <div class="btn-group btn-group-sm dropdown">
-          <button id="dropdownmenutexteditor" class="btn btn-primary btn-sm btn-block dropdown-toggle"
-            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Text
-          </button>
-          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownmenutexteditor">
-            <div class="px-2">
-              <div class="form-group">
-                <div class="input-group input-group-sm">
-                  <div class="input-group-append">
-                    <span class="input-group-text">
-                      <fa-icon [icon]="['fas', 'text-height']"></fa-icon>
-                    </span>
-                  </div>
-                  <input type="range" class="custom-range form-control" [(ngModel)]="properties.text.fontSize"
-                    (change)="setFontSize()" step="1" min="1" max="120" />
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="input-group input-group-sm">
-                  <div class="input-group-append">
-                    <span class="input-group-text">
-                      <fa-icon [icon]="['fas', 'bold']"></fa-icon>
-                    </span>
-                  </div>
-                  <input type="range" class="custom-range form-control" [(ngModel)]="properties.text.lineHeight"
-                    (change)="setLineHeight()" step="0.1" min="0" max="10" />
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="input-group input-group-sm">
-                  <div class="input-group-append">
-                    <span class="input-group-text">
-                      <fa-icon [icon]="['fas', 'text-width']"></fa-icon>
-                    </span>
-                  </div>
-                  <input type="range" class="custom-range form-control" [(ngModel)]="properties.text.charSpacing"
-                    (change)="setCharSpacing()" step="10" min="-200" max="800" />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- END Set Effect Text -->
-    </div>
-
-  </div>
-</nav>
-
-<div class="container-fluid mt-2">
-  <div class="row">
-
-    <!-- Panel de creacion -->
-    <div class="col-sm-12 col-md-12 col-lg-2 col-xl-2">
-      <div class="accordion" id="accordionItems">
-        <div class="card mb-2">
-          <!-- Textos -->
-          <div class="card-header">
-            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseText"
-              aria-expanded="true" aria-controls="collapseOne">
-              Add Text
-            </button>
-          </div>
-          <div id="collapseText" aria-labelledby="headingOne" data-parent="#accordionItems" class="collapse">
-            <div class="card-body">
-              <div class="input-group">
-                <input type="text" class="form-control" [(ngModel)]="textString" placeholder="Add Text"
-                  (keyup.enter)="addText()" />
-                <div class="input-group-append">
-                  <button id="add-text" data-toggle="tooltip" data-placement="bottom" title="Add text"
-                    class="btn btn-primary" (click)="addText()">
-                    <fa-icon [icon]="['fas', 'plus']"></fa-icon>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- Countrys -->
-          <div class="card-header">
-            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseCountry"
-              aria-expanded="true" aria-controls="collapseOne">
-              Add Country
-            </button>
-          </div>
-          <div id="collapseCountry" aria-labelledby="headingOne" data-parent="#accordionItems" class="collapse">
-            <div class="card-body">
-				<input type="text" [(ngModel)]="filterCountries" class="form-control" placeholder="Search..."/>
-                <!-- <img class="images-item" [src]="'https://www.countryflags.io/'+country.alpha2Code+'/flat/64.png'"  (click)="getImgPolaroid($event)" *ngFor="let country of countries" /> -->
-				<div class="max-height">
-					<img class="images-item" [src]="'https://restcountries.eu/data/'+country.alpha3Code+'.svg' | lowercase"  (click)="getImgPolaroid($event)" *ngFor="let country of countries | pipefilter:filterCountries" />
-				</div>
-            </div>
-          </div>
-          <!-- Ojos -->
-          <div class="card-header">
-            <button class="btn btn-link " type="button" data-toggle="collapse" data-target="#collapseEyes"
-              aria-expanded="true" aria-controls="collapseOne">
-              Add Eyes
-            </button>
-          </div>
-          <div id="collapseEyes" aria-labelledby="headingOne" data-parent="#accordionItems" class="collapse">
-            <div class="card-body max-height">
-              <img class="images-item" (click)="getImgPolaroid($event)" src="assets/ojos/Alegre.png" />
-              <img class="images-item" (click)="getImgPolaroid($event)" src="assets/ojos/Asustado.png" />
-              <img class="images-item" (click)="getImgPolaroid($event)" src="assets/ojos/Compasible.png" />
-              <img class="images-item" (click)="getImgPolaroid($event)" src="assets/ojos/Durmiendo.png" />
-              <img class="images-item" (click)="getImgPolaroid($event)" src="assets/ojos/Enojado.png" />
-              <img class="images-item" (click)="getImgPolaroid($event)" src="assets/ojos/Guinho.png" />
-              <img class="images-item" (click)="getImgPolaroid($event)" src="assets/ojos/Normal.png" />
-              <img class="images-item" (click)="getImgPolaroid($event)" src="assets/ojos/Riendo.png" />
-              <img class="images-item" (click)="getImgPolaroid($event)" src="assets/ojos/Sorprendido.png" />
-              <img class="images-item" (click)="getImgPolaroid($event)" src="assets/ojos/Tranquilo.png" />
-            </div>
-          </div>
-          <!-- Image Upload -->
-          <div class="card-header">
-            <button class="btn btn-link " type="button" data-toggle="collapse" data-target="#collapseUpload"
-              aria-expanded="true" aria-controls="collapseOne">
-              Upload Image
-            </button>
-          </div>
-          <div id="collapseUpload" aria-labelledby="headingOne" data-parent="#accordionItems" class="collapse">
-            <div class="card-body">
-              <img id="testImage" *ngIf="url" class="images-item-upload" [src]="url" (click)="addImageOnCanvas(url)" />
-              <div class="input-group">
-                <div class="custom-file">
-                  <input type="file" class="custom-file-input" (change)="readUrl($event)" />
-                  <label class="custom-file-label btn-outline-secondary"></label>
-                </div>
-                <div class="input-group-append">
-                  <button type="button" class="btn btn-outline-danger btn-sm btn-block" (click)="removeWhite(url)">
-                    <i class="fa fa-times" aria-hidden="true"></i> Remove
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- Figuras -->
-          <div class="card-header">
-            <button class="btn btn-link " type="button" data-toggle="collapse" data-target="#collapseFigure"
-              aria-expanded="true" aria-controls="collapseOne">
-              Add Figure
-            </button>
-          </div>
-          <div id="collapseFigure" aria-labelledby="headingOne" data-parent="#accordionItems" class="collapse">
-            <div class="card-body">
-              <div class="btn-group btn-group-sm btn-block mb-2">
-                <button type="button" class="btn btn-primary" (click)="addFigure('square')">
-                  <fa-icon [icon]="['fas', 'square']"></fa-icon>
-                </button>
-                <button type="button" class="btn btn-primary" (click)="addFigure('triangle')">
-                  <fa-icon [icon]="['fas', 'caret-up']"></fa-icon>
-                </button>
-                <button type="button" class="btn btn-primary" (click)="addFigure('circle')">
-                  <fa-icon [icon]="['fas', 'circle']"></fa-icon>
-                </button>
-                <button type="button" class="btn btn-primary" (click)="addFigure('rectangle')">
-                  <fa-icon [icon]="['fas', 'slash']"></fa-icon>
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
       <span class="navbar-text">
         Hecho por
-        <a href="https://www.facebook.com/SummitCode">
-          SummitCode
+        <a href="https://www.facebook.com/TierraBall-629249990554486/">
+          TierraBall
         </a>
       </span>
     </div>
-    <!-- Final Panel de creacion -->
+  </div>
+</nav>
 
+<nav>
+  <div class="nav justify-content-center nav-pills " id="nav-tab" role="tablist">
+    <a class="nav-link" id="nav-object-tab" data-toggle="tab" href="#nav-object" role="tab" aria-controls="nav-object"
+      aria-selected="true">Object</a>
+    <a class="nav-link" id="nav-canvas-tab" data-toggle="tab" href="#nav-canvas" role="tab" aria-controls="nav-canvas"
+      aria-selected="true">Canvas</a>
+    <a class="nav-link" id="nav-text-tab" data-toggle="tab" href="#nav-text" role="tab" aria-controls="nav-text"
+      aria-selected="true">Text</a>
+    <a class="nav-link active" id="nav-countries-tab" data-toggle="tab" href="#nav-countries" role="tab"
+      aria-controls="nav-countries" aria-selected="false">Countries</a>
+    <a class="nav-link" id="nav-eyes-tab" data-toggle="tab" href="#nav-eyes" role="tab" aria-controls="nav-eyes"
+      aria-selected="false">Eyes</a>
+    <a class="nav-link" id="nav-upload-tab" data-toggle="tab" href="#nav-upload" role="tab" aria-controls="nav-upload"
+      aria-selected="false">Upload Image</a>
+    <a class="nav-link" id="nav-figure-tab" data-toggle="tab" href="#nav-figure" role="tab" aria-controls="nav-figure"
+      aria-selected="false">Figure</a>
+    <a class="nav-link" id="nav-draw-tab" data-toggle="tab" href="#nav-draw" role="tab" aria-controls="nav-draw"
+      aria-selected="false">Draw</a>
+  </div>
+</nav>
+<div class="tab-content" id="nav-tabContent">
+  <div class="tab-pane fade" id="nav-object" role="tabpanel" aria-labelledby="nav-object-tab">
+    
+  </div>
+  <div class="tab-pane fade" id="nav-canvas" role="tabpanel" aria-labelledby="nav-canvas-tab">
+
+  </div>
+  <div class="tab-pane fade" id="nav-text" role="tabpanel" aria-labelledby="nav-text-tab">
+    <div class="row mx-4 my-4">
+      <div class="form-inline">
+        <div class="form-group mr-3">
+          <div class="input-group">
+            <input type="text" class="form-control" [(ngModel)]="textString" placeholder="Add Text"
+              (keyup.enter)="addText()" />
+            <div class="input-group-append">
+              <button id="add-text" data-toggle="tooltip" data-placement="bottom" title="Add text"
+                class="btn btn-primary" (click)="addText()">
+                <fa-icon [icon]="['fas', 'plus']"></fa-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- Set FontFamily -->
+        <div class="form-group">
+          <div class="input-group mr-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">
+                <fa-icon [icon]="['fas', 'font']"></fa-icon>
+              </span>
+            </div>
+            <select [(ngModel)]="properties.text.fontFamily" class="form-control" (change)="setFontFamily()">
+              <option value="arial">Arial</option>
+              <option value="helvetica" selected>Helvetica</option>
+              <option value="verdana">Verdana</option>
+              <option value="courier">Courier</option>
+              <option value="Roboto">Roboto</option>
+              <option value="Open Sans">Open Sans</option>
+              <option value="Zilla Slab">Zilla Slab</option>
+              <option value="Lato">Lato</option>
+              <option value="Bellefair">Bellefair</option>
+              <option value="Fresca">Fresca</option>
+              <option value="Raleway">Raleway</option>
+              <option value="Open Sans Condensed">Open Sans Condensed</option>
+              <option value="Indie Flower">Indie Flower</option>
+              <option value="Josefin Sans">Josefin Sans</option>
+              <option value="Inconsolata">Inconsolata</option>
+              <option value="Pacifico">Pacifico</option>
+              <option value="Gloria Hallelujah">Gloria Hallelujah</option>
+            </select>
+          </div>
+        </div>
+        <!-- END Set FontFamily -->
+        <!-- Set Format -->
+        <div class="form-group mr-3" *ngIf="selected && textEditor" [attr.disabled]="!(selected && textEditor)">
+          <div class="btn-group" role="group">
+            <button type="button" class="btn btn-primary" [ngClass]="{ active: properties.text.align == 'left' }"
+              (click)="setTextAlign('left')">
+              <fa-icon [icon]="['fas', 'align-left']"></fa-icon>
+            </button>
+            <button type="button" class="btn btn-primary" [ngClass]="{ active: properties.text.align == 'center' }"
+              (click)="setTextAlign('center')">
+              <fa-icon [icon]="['fas', 'align-center']"></fa-icon>
+            </button>
+            <button type="button" class="btn btn-primary" [ngClass]="{ active: properties.text.align == 'right' }"
+              (click)="setTextAlign('right')">
+              <fa-icon [icon]="['fas', 'align-right']"></fa-icon>
+            </button>
+            <button type="button" class="btn btn-primary" [ngClass]="{ active: properties.text.align == 'justify' }"
+              (click)="setTextAlign('justify')">
+              <fa-icon [icon]="['fas', 'align-justify']"></fa-icon>
+            </button>
+            <button type="button" class="btn btn-primary" [ngClass]="{ active: properties.text.fontWeight }"
+              (click)="setBold()">
+              <fa-icon [icon]="['fas', 'bold']"></fa-icon>
+            </button>
+            <button type="button" class="btn btn-primary" [ngClass]="{ active: properties.text.fontStyle }"
+              (click)="setFontStyle()">
+              <fa-icon [icon]="['fas', 'italic']"></fa-icon>
+            </button>
+            <button type="button" class="btn btn-primary" [ngClass]="{ active: hasTextDecoration('underline') }"
+              (click)="setTextDecoration('underline')">
+              <fa-icon [icon]="['fas', 'underline']"></fa-icon>
+            </button>
+            <button type="button" class="btn btn-primary" [ngClass]="{ active: hasTextDecoration('overline') }"
+              (click)="setTextDecoration('overline')">
+              Ö
+            </button>
+            <button type="button" class="btn btn-primary" [ngClass]="{ active: hasTextDecoration('line-through') }"
+              (click)="setTextDecoration('line-through')">
+              <fa-icon [icon]="['fas', 'strikethrough']"></fa-icon>
+            </button>
+          </div>
+        </div>
+        <!-- End Set Format-->
+        <!-- Set Effect Text -->
+        <div class="form-group mr-3" *ngIf="selected && textEditor">
+          <div class="input-group mr-3">
+            <div class="input-group-append">
+              <span class="input-group-text">
+                <fa-icon [icon]="['fas', 'text-height']"></fa-icon>
+              </span>
+            </div>
+            <input type="range" class="form-control" [(ngModel)]="properties.text.fontSize" (change)="setFontSize()"
+              step="1" min="1" max="120" />
+          </div>
+          <div class="input-group mr-3">
+            <div class="input-group-append">
+              <span class="input-group-text">
+                <fa-icon [icon]="['fas', 'bold']"></fa-icon>
+              </span>
+            </div>
+            <input type="range" class="form-control" [(ngModel)]="properties.text.lineHeight" (change)="setLineHeight()"
+              step="0.1" min="0" max="10" />
+          </div>
+          <div class="input-group mr-3">
+            <div class="input-group-append">
+              <span class="input-group-text">
+                <fa-icon [icon]="['fas', 'text-width']"></fa-icon>
+              </span>
+            </div>
+            <input type="range" class="form-control" [(ngModel)]="properties.text.charSpacing"
+              (change)="setCharSpacing()" step="10" min="-200" max="800" />
+          </div>
+        </div>
+        <!-- END Set Effect Text -->
+      </div>
+    </div>
+  </div>
+  <div class="tab-pane fade show active" id="nav-countries" role="tabpanel" aria-labelledby="nav-countries-tab">
+    <div class="row mx-4 my-4">
+      <div class="col-2">
+        <div class="form-group">
+          <input type="text" [(ngModel)]="filterCountries" class="form-control" placeholder="Search... | Shift + scroll on country" />
+        </div>
+      </div>
+      <div class="col-10">
+        <div class="max-height">
+          <img class="images-item" [src]="'https://restcountries.eu/data/'+country.alpha3Code+'.svg' | lowercase"
+            (click)="getImgPolaroid($event)" *ngFor="let country of countries | pipefilter:filterCountries" />
+        </div>
+        <!-- <p class="help">SVG</p> -->
+      </div>
+      <!-- <div class="col-4">
+        <div class="max-height">
+          <img class="images-item" [src]="'https://www.countryflags.io/'+country.alpha2Code+'/flat/64.png'"
+            (click)="getImgPolaroid($event)" *ngFor="let country of countries | pipefilter:filterCountries" />
+        </div>
+        <p class="help">PNG</p>
+      </div> -->
+    </div>
+
+  </div>
+  <div class="tab-pane fade" id="nav-eyes" role="tabpanel" aria-labelledby="nav-eyes-tab">
+    <div class="row mx-4 my-4">
+      <div class="col">
+        <img class="images-item" (click)="getImgPolaroid($event)" src="assets/ojos/Alegre.png" />
+        <img class="images-item" (click)="getImgPolaroid($event)" src="assets/ojos/Asustado.png" />
+        <img class="images-item" (click)="getImgPolaroid($event)" src="assets/ojos/Compasible.png" />
+        <img class="images-item" (click)="getImgPolaroid($event)" src="assets/ojos/Durmiendo.png" />
+        <img class="images-item" (click)="getImgPolaroid($event)" src="assets/ojos/Enojado.png" />
+        <img class="images-item" (click)="getImgPolaroid($event)" src="assets/ojos/Guinho.png" />
+        <img class="images-item" (click)="getImgPolaroid($event)" src="assets/ojos/Normal.png" />
+        <img class="images-item" (click)="getImgPolaroid($event)" src="assets/ojos/Riendo.png" />
+        <img class="images-item" (click)="getImgPolaroid($event)" src="assets/ojos/Sorprendido.png" />
+        <img class="images-item" (click)="getImgPolaroid($event)" src="assets/ojos/Tranquilo.png" />
+      </div>
+    </div>
+  </div>
+  <div class="tab-pane fade" id="nav-upload" role="tabpanel" aria-labelledby="nav-upload-tab">
+    <div class="row mx-4 my-4">
+      <div class="col">
+        <img id="testImage" *ngIf="url" class="images-item-upload" [src]="url" (click)="addImageOnCanvas(url)" />
+        <div class="input-group">
+          <div class="custom-file">
+            <input type="file" class="custom-file-input" (change)="readUrl($event)" />
+            <label class="custom-file-label btn-outline-secondary"></label>
+          </div>
+          <div class="input-group-append">
+            <button type="button" class="btn btn-outline-danger btn-sm btn-block" (click)="removeWhite(url)">
+              <i class="fa fa-times" aria-hidden="true"></i> Remove
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="tab-pane fade" id="nav-figure" role="tabpanel" aria-labelledby="nav-figure-tab">
+    <div class="row mx-4 my-4">
+      <div class="col">
+        <div class="btn-group btn-group-sm btn-block mb-2">
+          <button type="button" class="btn btn-primary" (click)="addFigure('square')">
+            <fa-icon [icon]="['fas', 'square']"></fa-icon>
+          </button>
+          <button type="button" class="btn btn-primary" (click)="addFigure('triangle')">
+            <fa-icon [icon]="['fas', 'caret-up']"></fa-icon>
+          </button>
+          <button type="button" class="btn btn-primary" (click)="addFigure('circle')">
+            <fa-icon [icon]="['fas', 'circle']"></fa-icon>
+          </button>
+          <button type="button" class="btn btn-primary" (click)="addFigure('rectangle')">
+            <fa-icon [icon]="['fas', 'slash']"></fa-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="tab-pane fade" id="nav-draw" role="tabpanel" aria-labelledby="nav-draw-tab"></div>
+</div>
+<hr>
+<div class="container-fluid mt-2">
+  <div class="row justify-content-center">
     <!-- Canvas -->
-    <div class="col-sm-12 col-md-12 col-lg-10 col-xl-10">
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
       <canvas id="canvas"></canvas>
     </div>
     <!-- Final Canvas -->
-
     <!-- Render JSON -->
     <!-- <div class="col-12">
       <br />
