@@ -4,7 +4,6 @@
   .images-item {
     cursor: pointer;
     -webkit-transition: .5s ease;
-    -webkit-transition: .5s ease;
     padding: 1px;
     max-width: 50px;
   }
@@ -17,7 +16,6 @@
     width: 80%;
     cursor: pointer;
     padding-bottom: 10px;
-    -webkit-transition: .5s ease;
     -webkit-transition: .5s ease;
   }
   
